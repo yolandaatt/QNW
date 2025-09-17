@@ -1,0 +1,63 @@
+# --- OS/Editor ---
+.DS_Store
+Thumbs.db
+.idea/
+# Behåll specifika VS Code-filer i repo:
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# --- Node / TypeScript / Vite ---
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+build/
+**/build/
+.temp/
+.tmp/
+*.tsbuildinfo
+
+# --- Logs ---
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# --- Tests / Coverage / Tool caches ---
+coverage/
+**/coverage/
+.vitest/
+.nyc_output/
+.eslintcache
+.prettier-cache/
+
+# --- Env-filer (spara bara exempel) ---
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example
+
+# --- Docker ---
+docker-data/
+**/docker-data/
+docker-compose.override.yml
+docker/*.local.*
+
+# --- Cert/nycklar (om de råkar hamna i projektet) ---
+*.pem
+*.key
+*.crt
+*.pfx
+
+# --- Client-specifikt (Vite) ---
+client/dist/
+client/.vite/
+
+# --- Server-specifikt ---
+server/dist/
+# Om du råkar ha kompilerade test-js från äldre buildar:
+server/tests/**/*.js
