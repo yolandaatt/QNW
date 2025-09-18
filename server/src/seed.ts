@@ -3,7 +3,9 @@ import Product from "./models/Product.js";
 
 async function seed() {
   try {
-    await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/qnw");
+    await mongoose.connect(
+      process.env.MONGO_URI || "mongodb://localhost:27017/qnw",
+    );
 
     // Rensa gamla produkter först
     await Product.deleteMany({});

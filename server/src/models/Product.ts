@@ -9,13 +9,16 @@ export interface IProduct extends Document {
   inStock: boolean;
 }
 
-const productSchema = new Schema<IProduct>({
-  title: { type: String, required: true },
-  price: { type: Number, required: true },
-  imageUrl: { type: String, required: true },
-  description: { type: String },
-  category: { type: String },
-  inStock: { type: Boolean, default: true },
-}, { timestamps: true });
+const productSchema = new Schema<IProduct>(
+  {
+    title: { type: String, required: true },
+    price: { type: Number, required: true },
+    imageUrl: { type: String, required: true },
+    description: { type: String },
+    category: { type: String },
+    inStock: { type: Boolean, default: true },
+  },
+  { timestamps: true },
+);
 
 export default model<IProduct>("Product", productSchema);
