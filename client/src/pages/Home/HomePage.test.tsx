@@ -1,21 +1,33 @@
 import { render, screen } from '@testing-library/react';
-import HomePage from './HomePage';
 import { CartProvider } from '@/context/CartContext';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
+import HomePage from './HomePage';
 
 describe('HomePage', () => {
   it('visar rubrik och introduktionstext', () => {
     render(
       <CartProvider>
-        <BrowserRouter>
+        <MemoryRouter>
           <HomePage />
-        </BrowserRouter>
+        </MemoryRouter>
       </CartProvider>
     );
 
-    const heading = screen.getByRole('heading', { level: 1 });
-    expect(heading).toHaveTextContent(/välkommen/i);
+    expect(screen.getByRole('heading', { name: /välkommen till qnw!/i })).toBeInTheDocument();
 
     expect(screen.getByText(/det här är startsidan/i)).toBeInTheDocument();
+  });
+
+  it('renderar produktkort för alla produkter', () => {
+    render(
+      <CartProvider>
+        <MemoryRouter>
+          <HomePage />
+        </MemoryRouter>
+      </CartProvider>
+    );
+    expect(screen.getByText(/äpple/i)).toBeInTheDocument();
+    expect(screen.getByText(/banan/i)).toBeInTheDocument();
+    expect(screen.getByText(/apelsin/i)).toBeInTheDocument();
   });
 });

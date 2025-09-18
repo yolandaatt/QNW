@@ -1,24 +1,26 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
+import type { Product } from '@/types/Product';
 
-type CartItem = {
-  id: number;
-  title: string;
-  price: number;
-  quantity: number;
-};
+type CartItem = Product & { quantity: number };
 
 type CartContextType = {
   items: CartItem[];
-  addToCart: (item: Omit<CartItem, 'quantity'>, quantity?: number) => void;
+  addToCart: (item: Product, quantity?: number) => void;
   clearCart: () => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+export function CartProvider({
+  children,
+  initialItems = [],
+}: {
+  children: ReactNode;
+  initialItems?: CartItem[];
+}) {
+  const [items, setItems] = useState<CartItem[]>(initialItems);
 
-  function addToCart(item: Omit<CartItem, 'quantity'>, quantity: number = 1) {
+  function addToCart(item: Product, quantity: number = 1) {
     setItems((prev) => {
       const existing = prev.find((p) => p.id === item.id);
       if (existing) {

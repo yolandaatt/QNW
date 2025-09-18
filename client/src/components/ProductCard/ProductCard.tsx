@@ -1,29 +1,30 @@
 import { useCart } from '@/context/CartContext';
 import { Link } from 'react-router-dom';
+import type { Product } from '@/types/Product';
 
-type ProductCardProps = {
-  id: number;
-  title: string;
-  price: number;
-  imageUrl: string;
-  onAddToCart?: () => void;
-};
+interface ProductCardProps {
+  product: Product;
+}
 
-function ProductCard({ id, title, price, imageUrl }: ProductCardProps) {
+function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
+
   return (
     <div
-      className="flex flex-col items-center rounded-lg border bg-white p-4 shadow-sm transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+      className="flex flex-col items-center rounded-lg border bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
       data-testid="product-card"
     >
-      <Link to={`/products/${id}`} className="vlock text-center">
-        <img src={imageUrl} alt={title} className="mb-4 h-32 w-32 rounded object-cover" />
-        <h2 className="mb-2 text-lg font-semibold">{title}</h2>
-        <p className="mb-4 text-gray-700">{price.toFixed(2)} kr</p>
+      <Link to={`/products/${product.id}`} className="block w-full text-center">
+        <img
+          src={product.imageUrl}
+          alt={product.title}
+          className="mx-auto mb-4 h-32 w-32 rounded object-cover"
+        />
+        <h2 className="mb-2 text-lg font-semibold">{product.title}</h2>
+        <p className="mb-4 text-gray-700">{product.price.toFixed(2)} kr</p>
       </Link>
-
       <button
-        onClick={() => addToCart({ id, title, price })}
+        onClick={() => addToCart(product)}
         className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
       >
         Lägg i varukorg

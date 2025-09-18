@@ -1,41 +1,44 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import ProductCard from './ProductCard';
 import { CartProvider } from '@/context/CartContext';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
+import type { Product } from '@/types/Product';
+
+const mockProduct: Product = {
+  id: 1,
+  title: 'Testprodukt',
+  price: 99.99,
+  imageUrl: 'https://via.placeholder.com/300',
+  description: 'En testbeskrivning',
+};
 
 describe('ProductCard', () => {
-  const mockProduct = {
-    id: 1,
-    title: 'Testprodukt',
-    price: 199,
-    imageUrl: 'https://via.placeholder.com/150',
-  };
-
   it('visar titel, pris och bild', () => {
     render(
       <CartProvider>
-        <BrowserRouter>
-          <ProductCard {...mockProduct} />
-        </BrowserRouter>
+        <MemoryRouter>
+          <ProductCard product={mockProduct} />
+        </MemoryRouter>
       </CartProvider>
     );
 
     expect(screen.getByText(/testprodukt/i)).toBeInTheDocument();
-    expect(screen.getByText(/199\.00 kr/)).toBeInTheDocument();
+    expect(screen.getByText(/99\.99\s*kr/)).toBeInTheDocument();
     expect(screen.getByRole('img')).toHaveAttribute('src', mockProduct.imageUrl);
   });
 
   it('lägger till produkt i varukorgen vid klick', () => {
     render(
       <CartProvider>
-        <BrowserRouter>
-          <ProductCard {...mockProduct} />
-        </BrowserRouter>
+        <MemoryRouter>
+          <ProductCard product={mockProduct} />
+        </MemoryRouter>
       </CartProvider>
     );
 
-    fireEvent.click(screen.getByText(/lägg i varukorg/i));
+    const button = screen.getByRole('button', { name: /lägg i varukorg/i });
+    fireEvent.click(button);
 
-    expect(screen.getByText(/lägg i varukorg/i)).toBeInTheDocument();
+    expect(button).toBeEnabled();
   });
 });

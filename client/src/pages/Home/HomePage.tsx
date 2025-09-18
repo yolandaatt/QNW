@@ -1,23 +1,27 @@
 import ProductCard from '@/components/ProductCard/ProductCard';
+import type { Product } from '@/types/Product';
 
-const mockProducts = [
+const mockProducts: Product[] = [
   {
     id: 1,
     title: 'Äpple',
     price: 12.5,
     imageUrl: 'https://via.placeholder.com/150',
+    description: 'Ett fräscht rött äpple.',
   },
   {
     id: 2,
     title: 'Banan',
     price: 8.0,
     imageUrl: 'https://via.placeholder.com/150',
+    description: 'En söt och mogen banan.',
   },
   {
     id: 3,
     title: 'Apelsin',
     price: 15.0,
     imageUrl: 'https://via.placeholder.com/150',
+    description: 'En saftig apelsin full av C-vitamin.',
   },
 ];
 
@@ -29,13 +33,7 @@ function HomePage() {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {mockProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            title={product.title}
-            price={product.price}
-            imageUrl={product.imageUrl}
-          />
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>

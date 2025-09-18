@@ -1,8 +1,9 @@
 import { useParams, Link } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useState } from 'react';
+import type { Product } from '@/types/Product';
 
-const mockProducts = [
+const mockProducts: Product[] = [
   {
     id: 1,
     title: 'Äpple',

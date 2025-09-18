@@ -4,13 +4,15 @@ import App from './App';
 import { CartProvider } from './context/CartContext';
 
 describe('App', () => {
-  it('renderar en huvudrubrik', () => {
+  it('renderar header och startsidans rubrik', () => {
     render(
       <CartProvider>
         <App />
       </CartProvider>
     );
-    const h1 = screen.getByRole('heading', { level: 1, name: /välkommen/i });
-    expect(h1).toBeInTheDocument();
+
+    expect(screen.getByRole('heading', { name: /min butik/i })).toBeInTheDocument();
+
+    expect(screen.getByRole('heading', { name: /välkommen till qnw!/i })).toBeInTheDocument();
   });
 });
