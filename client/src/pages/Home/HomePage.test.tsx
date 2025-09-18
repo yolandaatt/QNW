@@ -5,9 +5,10 @@ import { CartProvider } from '@/context/CartContext';
 describe('HomePage', () => {
   it('visar rubrik och introduktionstext', () => {
     render(
-    <CartProvider>
-      <HomePage />
-    </CartProvider>);
+      <CartProvider>
+        <HomePage />
+      </CartProvider>
+    );
 
     const heading = screen.getByRole('heading', { level: 1 });
     expect(heading).toHaveTextContent(/välkommen/i);
