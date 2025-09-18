@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import ProductCard from './ProductCard';
 import { CartProvider } from '@/context/CartContext';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('ProductCard', () => {
   const mockProduct = {
@@ -13,7 +14,9 @@ describe('ProductCard', () => {
   it('visar titel, pris och bild', () => {
     render(
       <CartProvider>
-        <ProductCard {...mockProduct} />
+        <BrowserRouter>
+          <ProductCard {...mockProduct} />
+        </BrowserRouter>
       </CartProvider>
     );
 
@@ -25,7 +28,9 @@ describe('ProductCard', () => {
   it('lägger till produkt i varukorgen vid klick', () => {
     render(
       <CartProvider>
-        <ProductCard {...mockProduct} />
+        <BrowserRouter>
+          <ProductCard {...mockProduct} />
+        </BrowserRouter>
       </CartProvider>
     );
 

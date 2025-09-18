@@ -1,12 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import HomePage from './HomePage';
 import { CartProvider } from '@/context/CartContext';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('HomePage', () => {
   it('visar rubrik och introduktionstext', () => {
     render(
       <CartProvider>
-        <HomePage />
+        <BrowserRouter>
+          <HomePage />
+        </BrowserRouter>
       </CartProvider>
     );
 
