@@ -1,11 +1,12 @@
-import './index.css';
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./router/AppRoutes";
 
 function App() {
   return (
-    <div>
-      <h1>Hello World!</h1>
-    </div>
-  );
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  )
 }
 
 export default App;
