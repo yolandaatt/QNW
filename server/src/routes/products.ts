@@ -9,7 +9,7 @@ router.get("/", async (_req: Request, res: Response) => {
     const products = await Product.find();
     res.json(products);
   } catch {
-    res.status(500).json({ error: "Kunde inte hämta produkter" });
+    res.status(500).json({ error: "Failed to fetch products" });
   }
 });
 
@@ -18,51 +18,52 @@ router.get("/:id", async (req: Request, res: Response) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return res.status(404).json({ error: "Produkten hittades inte" });
+      return res.status(404).json({ error: "Product not found" });
     }
     res.json(product);
   } catch {
-    res.status(500).json({ error: "Kunde inte hämta produkten" });
+    res.status(500).json({ error: "Failed to fetch product" });
   }
 });
 
-//CREATE product
+// POST /products
 router.post("/", async (req: Request, res: Response) => {
   try {
     const product = new Product(req.body);
     const saved = await product.save();
     res.status(201).json(saved);
   } catch {
-    res.status(400).json({ error: "Kunde inte skapa produkt" });
+    res.status(400).json({ error: "Failed to create product" });
   }
 });
 
-//UPDATE product
+// PUT /products/:id
 router.put("/:id", async (req: Request, res: Response) => {
   try {
-    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const updated = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }, // return updated product
+    );
     if (!updated) {
-      return res.status(404).json({ error: "Produkten hittades inte" });
+      return res.status(404).json({ error: "Product not found" });
     }
     res.json(updated);
   } catch {
-    res.status(400).json({ error: "Kunde inte uppdatera produkt" });
+    res.status(400).json({ error: "Failed to update product" });
   }
 });
 
-//DELETE product
+// DELETE /products/:id
 router.delete("/:id", async (req: Request, res: Response) => {
   try {
     const deleted = await Product.findByIdAndDelete(req.params.id);
     if (!deleted) {
-      return res.status(404).json({ error: "Produkten hittades inte" });
+      return res.status(404).json({ error: "Product not found" });
     }
-    res.json({ message: "Produkten har raderats" });
+    res.json({ message: "Product deleted" });
   } catch {
-    res.status(500).json({ error: "Kunde inte radera produkt" });
+    res.status(500).json({ error: "Failed to delete product" });
   }
 });
 
