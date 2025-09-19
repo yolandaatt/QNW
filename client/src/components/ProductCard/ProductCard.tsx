@@ -14,7 +14,7 @@ function ProductCard({ product }: ProductCardProps) {
       className="flex flex-col items-center rounded-lg border bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
       data-testid="product-card"
     >
-      <Link to={`/products/${product.id}`} className="block w-full text-center">
+      <Link to={`/products/${product._id}`} className="block w-full text-center">
         <img
           src={product.imageUrl}
           alt={product.title}

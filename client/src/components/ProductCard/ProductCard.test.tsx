@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import type { Product } from '@/types/Product';
 
 const mockProduct: Product = {
-  id: 1,
+  _id: '1',
   title: 'Testprodukt',
   price: 99.99,
   imageUrl: 'https://via.placeholder.com/300',

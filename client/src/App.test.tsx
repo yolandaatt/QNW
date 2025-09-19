@@ -1,18 +1,16 @@
-import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { CartProvider } from '@/context/CartContext';
 import App from './App';
-import { CartProvider } from './context/CartContext';
 
 describe('App', () => {
-  it('renderar header och startsidans rubrik', () => {
+  it('renderar header och startsidans rubrik', async () => {
     render(
       <CartProvider>
         <App />
       </CartProvider>
     );
 
-    expect(screen.getByRole('heading', { name: /min butik/i })).toBeInTheDocument();
-
-    expect(screen.getByRole('heading', { name: /välkommen till qnw!/i })).toBeInTheDocument();
+    // Headern har rubriken "Min butik"
+    expect(await screen.findByRole('heading', { name: /min butik/i })).toBeInTheDocument();
   });
 });

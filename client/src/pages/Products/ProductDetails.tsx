@@ -1,42 +1,30 @@
 import { useParams, Link } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Product } from '@/types/Product';
-
-const mockProducts: Product[] = [
-  {
-    id: 1,
-    title: 'Äpple',
-    price: 12.5,
-    imageUrl: 'https://via.placeholder.com/300',
-    description: 'Ett fräscht rött äpple.',
-  },
-  {
-    id: 2,
-    title: 'Banan',
-    price: 8.0,
-    imageUrl: 'https://via.placeholder.com/300',
-    description: 'En söt och mogen banan.',
-  },
-  {
-    id: 3,
-    title: 'Apelsin',
-    price: 15.0,
-    imageUrl: 'https://via.placeholder.com/300',
-    description: 'En saftig apelsin full av C-vitamin.',
-  },
-];
+import { fetchProductById } from '@/api/Products';
 
 function ProductDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const { addToCart } = useCart();
+  const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const product = mockProducts.find((p) => p.id === Number(id));
+  useEffect(() => {
+    if (!id) return;
 
-  if (!product) {
-    return <p className="mt-10 text-center">Produkten kunde inte hittas</p>;
-  }
+    fetchProductById(id)
+      .then((data) => setProduct(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading) return <p className="mt-10 text-center">Laddar produkt...</p>;
+  if (error) return <p className="mt-10 text-center text-red-600">Fel: {error}</p>;
+  if (!product)
+    return <p className="mt-10 text-center text-red-600">Produkten kunde inte hittas</p>;
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
@@ -48,7 +36,9 @@ function ProductDetailsPage() {
         <div>
           <h1 className="mb-4 text-3xl font-bold">{product.title}</h1>
           <p className="mb-4 text-gray-600">{product.description}</p>
-          <p className="mb-6 text-xl font-semibold">{product.price.toFixed(2)} kr</p>
+          <p className="mb-6 text-xl font-semibold">
+            {typeof product.price === 'number' ? `${product.price.toFixed(2)} kr` : 'Pris saknas'}
+          </p>
 
           <div className="flex items-center gap-4">
             <div className="flex items-center rounded-lg border">

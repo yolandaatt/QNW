@@ -1,37 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductCard from '@/components/ProductCard/ProductCard';
+import { fetchProducts } from '@/api/Products';
 import type { Product } from '@/types/Product';
 
-const mockProducts: Product[] = [
-  {
-    id: 1,
-    title: 'Äpple',
-    price: 12.5,
-    imageUrl: 'https://via.placeholder.com/300',
-    description: 'Ett fräscht rött äpple.',
-  },
-  {
-    id: 2,
-    title: 'Banan',
-    price: 8.0,
-    imageUrl: 'https://via.placeholder.com/300',
-    description: 'En söt och mogen banan.',
-  },
-  {
-    id: 3,
-    title: 'Apelsin',
-    price: 15.0,
-    imageUrl: 'https://via.placeholder.com/300',
-    description: 'En saftig apelsin full av C-vitamin.',
-  },
-];
-
 function ProductsPage() {
+  const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredProducts = mockProducts.filter((p) =>
+  useEffect(() => {
+    fetchProducts()
+      .then((data) => setProducts(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filteredProducts = products.filter((p) =>
     p.title.toLowerCase().includes(search.toLowerCase())
   );
+
+  if (loading) return <p>Laddar produkter...</p>;
+  if (error) return <p className="text-red-600">Fel: {error}</p>;
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
@@ -47,7 +37,7 @@ function ProductsPage() {
 
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
         {filteredProducts.length > 0 ? (
-          filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)
+          filteredProducts.map((product) => <ProductCard key={product._id} product={product} />)
         ) : (
           <p>Inga produkter matchade din sökning.</p>
         )}

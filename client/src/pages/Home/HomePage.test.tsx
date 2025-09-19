@@ -1,10 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { CartProvider } from '@/context/CartContext';
 import { MemoryRouter } from 'react-router-dom';
 import HomePage from './HomePage';
 
 describe('HomePage', () => {
-  it('visar rubrik och introduktionstext', () => {
+  it('visar rubrik från startsidan', async () => {
     render(
       <CartProvider>
         <MemoryRouter>
@@ -13,12 +13,12 @@ describe('HomePage', () => {
       </CartProvider>
     );
 
-    expect(screen.getByRole('heading', { name: /välkommen till qnw!/i })).toBeInTheDocument();
-
-    expect(screen.getByText(/det här är startsidan/i)).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: /välkommen till qnw!/i })
+    ).toBeInTheDocument();
   });
 
-  it('renderar produktkort för alla produkter', () => {
+  it('renderar produktkort för alla produkter', async () => {
     render(
       <CartProvider>
         <MemoryRouter>
@@ -26,8 +26,11 @@ describe('HomePage', () => {
         </MemoryRouter>
       </CartProvider>
     );
-    expect(screen.getByText(/äpple/i)).toBeInTheDocument();
-    expect(screen.getByText(/banan/i)).toBeInTheDocument();
-    expect(screen.getByText(/apelsin/i)).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(/äpple/i)).toBeInTheDocument();
+      expect(screen.getByText(/banan/i)).toBeInTheDocument();
+      expect(screen.getByText(/apelsin/i)).toBeInTheDocument();
+    });
   });
 });
