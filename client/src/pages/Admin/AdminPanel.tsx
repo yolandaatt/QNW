@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
 import api from '@/api/axios';
+import { type AxiosResponse, AxiosError } from 'axios';
 
 const AdminPanel = () => {
-  const [adminEmail, setAdminEmail] = useState('');
+  const [adminEmail, setAdminEmail] = useState<string>('');
 
   useEffect(() => {
     api
-      .get('/admin')
-      .then((res) => setAdminEmail(res.data))
-      .catch((err) => console.error('Någpt gick fel. Försök igen.', err));
+      .get<string>('/admin')
+      .then((res: AxiosResponse<string>) => {
+        setAdminEmail(res.data);
+      })
+      .catch((err: AxiosError) => {
+        console.error('Något gick fel. Försök igen.', err);
+      });
   }, []);
 
   return (
