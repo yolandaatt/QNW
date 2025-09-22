@@ -12,7 +12,7 @@ function CartPage() {
       ) : (
         <div className="space-y-4">
           {items.map((item) => (
-            <div key={item.id} className="flex items-center justify-between border-b pb-2">
+            <div key={item._id} className="flex items-center justify-between border-b pb-2">
               <div>
                 <h2 className="text-lg font-semibold">{item.title}</h2>
                 <p>

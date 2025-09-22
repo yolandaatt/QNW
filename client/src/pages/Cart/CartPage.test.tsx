@@ -32,7 +32,7 @@ describe('CartPage', () => {
   it('visar produkt i varukorgen och kan tömmas', () => {
     const initialItems = [
       {
-        id: 1,
+        _id: '1',
         title: 'Äpple',
         price: 10,
         imageUrl: '',

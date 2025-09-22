@@ -22,9 +22,11 @@ export function CartProvider({
 
   function addToCart(item: Product, quantity: number = 1) {
     setItems((prev) => {
-      const existing = prev.find((p) => p.id === item.id);
+      const existing = prev.find((p) => p._id === item._id);
       if (existing) {
-        return prev.map((p) => (p.id === item.id ? { ...p, quantity: p.quantity + quantity } : p));
+        return prev.map((p) =>
+          p._id === item._id ? { ...p, quantity: p.quantity + quantity } : p
+        );
       }
       return [...prev, { ...item, quantity }];
     });
