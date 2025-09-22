@@ -1,5 +1,6 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": { "noEmit": true },
-  "include": ["src", "tests"]
+  "include": ["src", "tests"],
+  "typeRoots": ["./node_modules/@types", "./src/types"]
 }

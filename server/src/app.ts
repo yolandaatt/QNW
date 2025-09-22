@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import productsRouter from "./routes/products.js";
+import authRoutes from "./routes/auth.js";
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ app.use(
     },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-  })
+  }),
 );
 
 app.set("json spaces", 2);
@@ -34,5 +35,7 @@ app.get("/health", (_req, res) => {
 });
 
 app.use("/api/products", productsRouter);
+
+app.use("/api/auth", authRoutes);
 
 export default app;
