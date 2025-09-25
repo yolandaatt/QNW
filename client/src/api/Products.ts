@@ -1,19 +1,20 @@
 import type { Product } from '@/types/Product';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/products';
+import api from '@/api/axios';
 
 export async function fetchProducts(): Promise<Product[]> {
-  const res = await fetch(`${API_URL}/products`);
-  if (!res.ok) {
+  try {
+    const res = await api.get<Product[]>('/products');
+    return res.data;
+  } catch {
     throw new Error('Failed to fetch products');
   }
-  return res.json();
 }
 
 export async function fetchProductById(id: string): Promise<Product> {
-  const res = await fetch(`${API_URL}/products/${id}`);
-  if (!res.ok) {
+  try {
+    const res = await api.get<Product>(`/products/${id}`);
+    return res.data;
+  } catch {
     throw new Error('Product not found');
   }
-  return res.json();
 }
