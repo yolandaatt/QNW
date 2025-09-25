@@ -7,6 +7,7 @@ import ProductDetailsPage from '@/pages/Products/ProductDetails';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminPanel from '@/pages/Admin/AdminPanel';
 import LoginPage from '@/pages/Login/LoginPage';
+import RegisterPage from '@/pages/Login/RegisterPage';
 
 function AppRoutes() {
   return (
@@ -25,6 +26,7 @@ function AppRoutes() {
           }
         />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Route>
     </Routes>
   );
