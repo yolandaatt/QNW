@@ -23,8 +23,7 @@ const LoginPage = () => {
       localStorage.setItem('role', res.data.role);
       localStorage.setItem('name', res.data.name);
 
-      if (res.data.role === "admin" )
-      navigate('/admin');
+      if (res.data.role === 'admin') navigate('/admin');
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.message || 'Något gick fel. Försök igen');
