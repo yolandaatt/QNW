@@ -15,6 +15,9 @@ function Header() {
           <Link to="/cart" className="hover:underline">
             Varukorg
           </Link>
+          <Link to="/login" className="hover:underline">
+            Logga in
+          </Link>
         </nav>
       </div>
     </header>

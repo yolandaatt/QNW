@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '@/api/axios';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const LoginPage = () => {
 
   return (
     <div className="mx-auto mt-10 max-w-md rounded border p-4 shadow">
-      <h1 className="mb-4 text-xl font-bold">Admin Login</h1>
+      <h1 className="mb-4 text-xl font-bold">Login</h1>
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
           <label htmlFor="email" className="mb-1 block">
@@ -59,12 +60,23 @@ const LoginPage = () => {
           />
         </div>
         {error && <p className="text-sm text-red-600">{error}</p>}
-        <button
-          type="submit"
-          className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-        >
-          Logga in
-        </button>
+
+        <div className="flex gap-4">
+          <button
+            type="submit"
+            className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+          >
+            Logga in
+          </button>
+          <Link to="/register">
+            <button
+              type="submit"
+              className="rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
+            >
+              Skapa konto
+            </button>
+          </Link>
+        </div>
       </form>
     </div>
   );
