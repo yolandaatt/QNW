@@ -21,9 +21,13 @@ const LoginPage = () => {
 
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
-      localStorage.setItem('name', res.data.name);
+      localStorage.setItem('name', res.data.token);
 
-      if (res.data.role === 'admin') navigate('/admin');
+      if (res.data.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.message || 'Något gick fel. Försök igen');
