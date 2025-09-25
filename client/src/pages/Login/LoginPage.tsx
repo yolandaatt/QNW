@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('admin@example.com');
-  const [password, setPassword] = useState('securepassword');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -20,6 +20,10 @@ const LoginPage = () => {
       });
 
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('role', res.data.role);
+      localStorage.setItem('name', res.data.name);
+
+      if (res.data.role === "admin" )
       navigate('/admin');
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {

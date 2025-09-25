@@ -62,7 +62,7 @@ describe('LoginPage', () => {
   });
 
   it('redirects on successful login', async () => {
-    mockPost.mockResolvedValueOnce({ data: { token: 'fake-jwt-token' } });
+    mockPost.mockResolvedValueOnce({ data: { token: 'fake-jwt-token', role: "admin" } });
 
     render(
       <MemoryRouter>
