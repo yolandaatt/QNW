@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default function CartMenu({ isOpen, onClose }: Props) {
-  const { items } = useCart();
+  const { items, increaseQuantity, decreaseQuantity, removeItem } = useCart();
 
   useEffect(() => {
     if (isOpen) {
@@ -18,6 +18,8 @@ export default function CartMenu({ isOpen, onClose }: Props) {
   }, [isOpen]);
 
   if (!isOpen) return null;
+
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <>
@@ -33,10 +35,33 @@ export default function CartMenu({ isOpen, onClose }: Props) {
                 <p>
                   {item.quantity} x {item.price.toFixed(2)} kr
                 </p>
+                <div className="mt-2 flex items-center gap-2">
+                  <button
+                    onClick={() => decreaseQuantity(item._id)}
+                    className="rounded bg-gray-200 px-2"
+                  >
+                    -
+                  </button>
+                  <span>{item.quantity}</span>
+                  <button
+                    onClick={() => increaseQuantity(item._id)}
+                    className="rounded bg-gray-200 px-2"
+                  >
+                    +
+                  </button>
+                  <button
+                    onClick={() => removeItem(item._id)}
+                    className="ml-auto text-sm text-red-600 hover:underline"
+                  >
+                    Ta bort
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
         )}
+
+        {items.length > 0 && <p className="mt-4 font-semibold">Totalt: {total.toFixed(2)} kr</p>}
 
         <button onClick={onClose} className="mt-4 w-full rounded bg-gray-800 py-2 text-white">
           Stäng
