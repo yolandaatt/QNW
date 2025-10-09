@@ -16,7 +16,7 @@ describe('App', () => {
       </UserProvider>
     );
 
-    // Headern har rubriken "Min butik"
+    // Headern har rubriken "qnw"
     expect(await screen.findByRole('heading', { name: /qnw/i })).toBeInTheDocument();
   });
 });

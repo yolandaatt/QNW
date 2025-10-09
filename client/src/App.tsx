@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './router/AppRoutes';
-import CartMenu from './components/CartMenu';
+import CartMenu from './components/Cartmenu/CartMenu';
 import { useCartMenu } from './context/CartMenuContext';
 
 function App() {

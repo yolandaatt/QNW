@@ -4,7 +4,7 @@ import HomePage from '@/pages/Home/HomePage';
 import CartPage from '@/pages/Cart/CartPage';
 import ProductsPage from '@/pages/Products/ProductsPage';
 import ProductDetailsPage from '@/pages/Products/ProductDetails';
-import ProtectedRoute from '@/components/ProtectedRoute';
+import ProtectedRoute from '@/components/Protectedroute/ProtectedRoute';
 import AdminPanel from '@/pages/Admin/AdminPanel';
 import LoginPage from '@/pages/Login/LoginPage';
 import RegisterPage from '@/pages/Login/RegisterPage';
