@@ -48,7 +48,7 @@ function CartPage() {
 
           <div className="mt-4 flex items-center justify-between border-t pt-4">
             <p className="text-xl font-bold">
-              Totalt: {items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2)} kr
+              {`Totalt: ${items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2)} kr`}
             </p>
             <button
               onClick={clearCart}
