@@ -13,11 +13,13 @@ const mockProduct: Product = {
 };
 
 describe('ProductCard', () => {
+  const mockFn = vi.fn();
+
   it('visar titel, pris och bild', () => {
     render(
       <CartProvider>
         <MemoryRouter>
-          <ProductCard product={mockProduct} />
+          <ProductCard product={mockProduct} onAddToCartClick={mockFn} />
         </MemoryRouter>
       </CartProvider>
     );
@@ -31,7 +33,7 @@ describe('ProductCard', () => {
     render(
       <CartProvider>
         <MemoryRouter>
-          <ProductCard product={mockProduct} />
+          <ProductCard product={mockProduct} onAddToCartClick={mockFn} />
         </MemoryRouter>
       </CartProvider>
     );

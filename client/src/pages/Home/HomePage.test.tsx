@@ -9,6 +9,7 @@ vi.mock('@/api/Products', () => ({
 
 import { fetchProducts } from '@/api/Products';
 import { CartProvider } from '@/context/CartContext';
+import { CartMenuProvider } from '@/context/CartMenuContext';
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -36,7 +37,9 @@ describe('HomePage', () => {
     render(
       <MemoryRouter>
         <CartProvider>
-          <HomePage />
+          <CartMenuProvider>
+            <HomePage />
+          </CartMenuProvider>
         </CartProvider>
       </MemoryRouter>
     );
@@ -48,7 +51,9 @@ describe('HomePage', () => {
     render(
       <MemoryRouter>
         <CartProvider>
-          <HomePage />
+          <CartMenuProvider>
+            <HomePage />
+          </CartMenuProvider>
         </CartProvider>
       </MemoryRouter>
     );

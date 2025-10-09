@@ -4,6 +4,7 @@ import { CartProvider } from '@/context/CartContext';
 import { vi, type MockInstance } from 'vitest';
 import ProductDetailsPage from './ProductDetails';
 import * as api from '@/api/Products';
+import { CartMenuProvider } from '@/context/CartMenuContext';
 
 const mockProduct = {
   _id: '1',
@@ -28,11 +29,13 @@ describe('ProductDetailsPage', () => {
   it('visar produktens detaljer när den finns', async () => {
     render(
       <CartProvider>
-        <MemoryRouter initialEntries={['/products/1']}>
-          <Routes>
-            <Route path="/products/:id" element={<ProductDetailsPage />} />
-          </Routes>
-        </MemoryRouter>
+        <CartMenuProvider>
+          <MemoryRouter initialEntries={['/products/1']}>
+            <Routes>
+              <Route path="/products/:id" element={<ProductDetailsPage />} />
+            </Routes>
+          </MemoryRouter>
+        </CartMenuProvider>
       </CartProvider>
     );
 
@@ -46,11 +49,13 @@ describe('ProductDetailsPage', () => {
 
     render(
       <CartProvider>
-        <MemoryRouter initialEntries={['/products/999']}>
-          <Routes>
-            <Route path="/products/:id" element={<ProductDetailsPage />} />
-          </Routes>
-        </MemoryRouter>
+        <CartMenuProvider>
+          <MemoryRouter initialEntries={['/products/999']}>
+            <Routes>
+              <Route path="/products/:id" element={<ProductDetailsPage />} />
+            </Routes>
+          </MemoryRouter>
+        </CartMenuProvider>
       </CartProvider>
     );
 

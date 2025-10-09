@@ -18,7 +18,6 @@ export default function CartMenu({ isOpen, onClose }: Props) {
   }, [isOpen]);
 
   if (!isOpen) return null;
-  console.log('MENYN ÄR ÖPPEN');
 
   return (
     <>

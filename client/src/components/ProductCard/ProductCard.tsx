@@ -1,14 +1,12 @@
-import { useCart } from '@/context/CartContext';
 import { Link } from 'react-router-dom';
 import type { Product } from '@/types/Product';
 
 interface ProductCardProps {
   product: Product;
+  onAddToCartClick: (product: Product) => void;
 }
 
-function ProductCard({ product }: ProductCardProps) {
-  const { addToCart } = useCart();
-
+function ProductCard({ product, onAddToCartClick }: ProductCardProps) {
   return (
     <div
       className="flex flex-col items-center rounded-lg border bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
@@ -24,7 +22,7 @@ function ProductCard({ product }: ProductCardProps) {
         <p className="mb-4 text-gray-700">{product.price.toFixed(2)} kr</p>
       </Link>
       <button
-        onClick={() => addToCart(product)}
+        onClick={() => onAddToCartClick(product)}
         className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
       >
         Lägg i varukorg

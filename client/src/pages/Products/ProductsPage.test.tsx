@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 import ProductsPage from './ProductsPage';
 import { CartProvider } from '@/context/CartContext';
+import { CartMenuProvider } from '@/context/CartMenuContext';
 
 const { mockFetchProducts } = vi.hoisted(() => ({
   mockFetchProducts: vi.fn(),
@@ -36,8 +37,10 @@ describe('ProductsPage', () => {
     render(
       <MemoryRouter>
         <CartProvider>
-          {' '}
-          <ProductsPage />
+          <CartMenuProvider>
+            {' '}
+            <ProductsPage />
+          </CartMenuProvider>
         </CartProvider>
       </MemoryRouter>
     );

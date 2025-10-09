@@ -2,12 +2,22 @@ import { useEffect, useState } from 'react';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import { fetchProducts } from '@/api/Products';
 import type { Product } from '@/types/Product';
+import { useCart } from '@/context/CartContext';
+import { useCartMenu } from '@/context/CartMenuContext';
 
 function ProductsPage() {
+  const { addToCart } = useCart();
+  const { openMenu } = useCartMenu();
+
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const handleAddToCartClick = (product: Product) => {
+    addToCart(product);
+    openMenu();
+  };
 
   useEffect(() => {
     fetchProducts()
@@ -37,7 +47,13 @@ function ProductsPage() {
 
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
         {filteredProducts.length > 0 ? (
-          filteredProducts.map((product) => <ProductCard key={product._id} product={product} />)
+          filteredProducts.map((product) => (
+            <ProductCard
+              key={product._id}
+              product={product}
+              onAddToCartClick={handleAddToCartClick}
+            />
+          ))
         ) : (
           <p>Inga produkter matchade din sökning.</p>
         )}

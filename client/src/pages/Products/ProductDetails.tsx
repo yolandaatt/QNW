@@ -3,16 +3,23 @@ import { useCart } from '@/context/CartContext';
 import { useEffect, useState } from 'react';
 import type { Product } from '@/types/Product';
 import { fetchProductById } from '@/api/Products';
-import CartMenu from '@/components/CartMenu';
+import { useCartMenu } from '@/context/CartMenuContext';
 
 function ProductDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const { addToCart } = useCart();
+  const { openMenu } = useCartMenu();
+
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showCartMenu, setShowCartMenu] = useState(false);
+
+  const handleAddToCartClick = () => {
+    if (!product) return;
+    addToCart(product, quantity);
+    openMenu();
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -59,10 +66,7 @@ function ProductDetailsPage() {
               </div>
 
               <button
-                onClick={() => {
-                  addToCart(product!, quantity);
-                  setShowCartMenu(true);
-                }}
+                onClick={handleAddToCartClick}
                 className="rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
               >
                 Lägg i varukorg
@@ -71,7 +75,6 @@ function ProductDetailsPage() {
           </div>
         </div>
       </div>
-      <CartMenu isOpen={showCartMenu} onClose={() => setShowCartMenu(false)} />
     </>
   );
 }
