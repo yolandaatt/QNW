@@ -1,7 +1,7 @@
 import { useCart } from '@/context/CartContext';
 
 function CartPage() {
-  const { items, clearCart } = useCart();
+  const { items, clearCart, increaseQuantity, decreaseQuantity, removeItem } = useCart();
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
@@ -17,9 +17,32 @@ function CartPage() {
                 <h2 className="text-lg font-semibold">{item.title}</h2>
                 <p>
                   {item.price.toFixed(2)} kr x {item.quantity}{' '}
+                  <span className="font-bold">{(item.price * item.quantity).toFixed(2)} kr</span>
                 </p>
               </div>
-              <p className="font-bold">{(item.price * item.quantity).toFixed(2)} kr</p>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => decreaseQuantity(item._id)}
+                  className="rounded bg-gray-300 px-2 py-1 hover:bg-gray-400"
+                >
+                  -
+                </button>
+                <span className="px-2">{item.quantity}</span>
+
+                <button
+                  onClick={() => increaseQuantity(item._id)}
+                  className="rounded bg-gray-300 px-2 py-1 hover:bg-gray-400"
+                >
+                  +
+                </button>
+                <button
+                  onClick={() => removeItem(item._id)}
+                  className="ml-4 rounded bg-red-600 px-2 py-1 text-white hover:bg-red-700"
+                >
+                  Radera produkt
+                </button>
+              </div>
             </div>
           ))}
 
