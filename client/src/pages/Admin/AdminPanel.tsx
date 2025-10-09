@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Product } from '@/types/Product';
-import api from '@/api/axios';
 import { fetchProducts } from '@/api/Products';
+import api from '@/api/axios';
 
 type FormMode = 'add' | 'edit' | null;
 
@@ -14,14 +14,10 @@ const AdminPanel = () => {
   const adminName = localStorage.getItem('name');
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
+    const loadProducts = async () => {
       try {
-        const res = await api.get<Product[]>('/products');
-        setProducts(res.data);
+        const prods = await fetchProducts();
+        setProducts(prods);
       } catch (err) {
         console.error('Fel vid hämtning av produkter:', err);
         setError('Kunde inte ladda produkter');
@@ -29,7 +25,7 @@ const AdminPanel = () => {
         setLoading(false);
       }
     };
-    fetchProducts();
+    loadProducts();
   }, []);
 
   const handleDelete = async (id: string) => {
@@ -47,10 +43,14 @@ const AdminPanel = () => {
     e.preventDefault();
     try {
       if (formMode === 'add') {
-        const res = await api.post<Product>('/products', currentProduct);
+        const res = await api.post<Product>('/products', {
+          ...currentProduct,
+          imageUrl: currentProduct.imageUrl ?? '',
+        });
         setProducts([...products, res.data]);
       } else if (formMode === 'edit' && currentProduct._id) {
-        const res = await api.put<Product>(`/products/${currentProduct._id}`, currentProduct);
+        const { _id, ...productWithoutId } = currentProduct;
+        const res = await api.put<Product>(`/products/${_id}`, productWithoutId);
         setProducts(products.map((p) => (p._id === currentProduct._id ? res.data : p)));
       }
       setFormMode(null);
@@ -74,10 +74,9 @@ const AdminPanel = () => {
           setCurrentProduct({});
         }}
       >
-        ➕ Lägg till produkt
+        Lägg till produkt
       </button>
 
-      {/* Produktformulär */}
       {formMode && (
         <form onSubmit={handleSave} className="mb-6 space-y-4 rounded border p-4 shadow">
           <h2 className="text-xl font-semibold">
@@ -94,7 +93,7 @@ const AdminPanel = () => {
           <input
             type="number"
             placeholder="Pris"
-            value={currentProduct.price || ''}
+            value={currentProduct.price ?? ''}
             onChange={(e) =>
               setCurrentProduct({ ...currentProduct, price: Number(e.target.value) })
             }
@@ -135,7 +134,6 @@ const AdminPanel = () => {
         </form>
       )}
 
-      {/* Produktlista */}
       {loading ? (
         <p>Laddar produkter...</p>
       ) : (
