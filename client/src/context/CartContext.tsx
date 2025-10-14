@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import type { Product } from '@/types/Product';
 
 type CartItem = Product & { quantity: number };
@@ -21,7 +21,31 @@ export function CartProvider({
   children: ReactNode;
   initialItems?: CartItem[];
 }) {
-  const [items, setItems] = useState<CartItem[]>(initialItems);
+  const [items, setItems] = useState<CartItem[]>(() => {
+    if (initialItems.length > 0) {
+      return initialItems;
+    }
+
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('cartItems');
+      if (stored) {
+        try {
+          return JSON.parse(stored);
+        } catch {
+          console.error('Kunde inte parsa cartItems från localStorage');
+        }
+      }
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('cartItems', JSON.stringify(items));
+    } catch (e) {
+      console.error('Kunde inte spara varukorg till localStorage:', e);
+    }
+  }, [items]);
 
   function addToCart(item: Product, quantity: number = 1) {
     setItems((prev) => {
@@ -59,7 +83,14 @@ export function CartProvider({
 
   return (
     <CartContext.Provider
-      value={{ items, addToCart, clearCart, increaseQuantity, decreaseQuantity, removeItem }}
+      value={{
+        items,
+        addToCart,
+        clearCart,
+        increaseQuantity,
+        decreaseQuantity,
+        removeItem,
+      }}
     >
       {children}
     </CartContext.Provider>
@@ -68,6 +99,8 @@ export function CartProvider({
 
 export function useCart() {
   const ctx = useContext(CartContext);
-  if (!ctx) throw new Error('useCart must be used within CartProvider');
+  if (!ctx) {
+    throw new Error('useCart must be used within CartProvider');
+  }
   return ctx;
 }

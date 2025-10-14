@@ -23,6 +23,7 @@ function CartPage() {
 
               <div className="flex items-center gap-2">
                 <button
+                  aria-label="Minska kvantitet"
                   onClick={() => decreaseQuantity(item._id)}
                   className="rounded bg-gray-300 px-2 py-1 hover:bg-gray-400"
                 >
@@ -31,12 +32,14 @@ function CartPage() {
                 <span className="px-2">{item.quantity}</span>
 
                 <button
+                  aria-label="Öka kvantitet"
                   onClick={() => increaseQuantity(item._id)}
                   className="rounded bg-gray-300 px-2 py-1 hover:bg-gray-400"
                 >
                   +
                 </button>
                 <button
+                  aria-label="Radera produkt"
                   onClick={() => removeItem(item._id)}
                   className="ml-4 rounded bg-red-600 px-2 py-1 text-white hover:bg-red-700"
                 >

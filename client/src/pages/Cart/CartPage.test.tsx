@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { CartProvider } from '@/context/CartContext';
 import CartPage from './CartPage';
 import type { Product } from '@/types/Product';
+import { vi } from 'vitest';
 
 function CustomCartProvider({
   children,
@@ -19,6 +20,11 @@ function CustomCartProvider({
 }
 
 describe('CartPage', () => {
+  beforeEach(() => {
+    localStorage.clear();
+    vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
+  });
+
   it('visar "Din varukorg är tom" när varukorgen är tom', () => {
     render(
       <CustomCartProvider>
@@ -74,7 +80,7 @@ describe('CartPage', () => {
       </CustomCartProvider>
     );
 
-    const plusButton = screen.getByRole('button', { name: '+' });
+    const plusButton = screen.getByRole('button', { name: 'Öka kvantitet' });
     fireEvent.click(plusButton);
 
     expect(screen.getByText(/10.00 kr x 2/i)).toBeInTheDocument();
@@ -99,7 +105,7 @@ describe('CartPage', () => {
       </CustomCartProvider>
     );
 
-    const minusButton = screen.getByRole('button', { name: '-' });
+    const minusButton = screen.getByRole('button', { name: 'Minska kvantitet' });
     fireEvent.click(minusButton);
 
     expect(screen.getByText(/10.00 kr x 1/i)).toBeInTheDocument();
