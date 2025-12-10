@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '@/context/UserContext';
 import api from '@/api/axios';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -9,6 +10,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { login } = useUser();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,14 +21,12 @@ const LoginPage = () => {
         password,
       });
 
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('role', res.data.role);
-      localStorage.setItem('name', res.data.token);
+      login(res.data.name, res.data.token, res.data.role === 'admin');
 
       if (res.data.role === 'admin') {
         navigate('/admin');
       } else {
-        navigate('/');
+        navigate('/mypage');
       }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {

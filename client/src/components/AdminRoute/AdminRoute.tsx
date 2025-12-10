@@ -12,7 +12,18 @@ const ProtectedRoute = ({ children }: Props) => {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+
+    if (payload.role !== 'admin') {
+      return <Navigate to="/" replace />;
+    }
+
+    return children;
+  } catch {
+    console.error('Invalid token format');
+    return <Navigate to="/login" replace />;
+  }
 };
 
 export default ProtectedRoute;

@@ -2,7 +2,7 @@ import { useUser } from '@/context/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
-  const { isLoggedIn, logout } = useUser();
+  const { isLoggedIn, isAdmin, logout } = useUser();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -17,6 +17,10 @@ const Header = () => {
         <Link to="/">Hem</Link>
         <Link to="/products">Produkter</Link>
         <Link to="/cart">Varukorg</Link>
+
+        {isLoggedIn &&
+          (isAdmin ? <Link to="/admin">Adminpanel</Link> : <Link to="/mypage">Mina sidor</Link>)}
+
         {isLoggedIn ? (
           <button onClick={handleLogout}>Logga ut</button>
         ) : (

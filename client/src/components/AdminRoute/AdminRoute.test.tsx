@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import ProtectedRoute from './ProtectedRoute';
+import AdminRoute from './AdminRoute';
 
 const mockNavigate = vi.fn();
 
@@ -25,9 +25,9 @@ describe('ProtectedRoute', () => {
   const setup = () =>
     render(
       <MemoryRouter>
-        <ProtectedRoute>
+        <AdminRoute>
           <div>Adminpanel</div>
-        </ProtectedRoute>
+        </AdminRoute>
       </MemoryRouter>
     );
 

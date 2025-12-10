@@ -1,4 +1,5 @@
 import { vi } from 'vitest';
+import { UserProvider } from '@/context/UserContext';
 
 const { mockPost } = vi.hoisted(() => ({
   mockPost: vi.fn(),
@@ -32,7 +33,9 @@ describe('LoginPage', () => {
   it('renders login form', () => {
     render(
       <MemoryRouter>
-        <LoginPage />
+        <UserProvider>
+          <LoginPage />
+        </UserProvider>
       </MemoryRouter>
     );
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
@@ -48,7 +51,9 @@ describe('LoginPage', () => {
 
     render(
       <MemoryRouter>
-        <LoginPage />
+        <UserProvider>
+          <LoginPage />
+        </UserProvider>
       </MemoryRouter>
     );
 
@@ -66,7 +71,9 @@ describe('LoginPage', () => {
 
     render(
       <MemoryRouter>
-        <LoginPage />
+        <UserProvider>
+          <LoginPage />
+        </UserProvider>
       </MemoryRouter>
     );
 

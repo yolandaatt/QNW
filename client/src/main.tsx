@@ -1,3 +1,4 @@
+import { BrowserRouter } from 'react-router-dom';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
@@ -7,13 +8,15 @@ import { UserProvider } from './context/UserContext.tsx';
 import { CartMenuProvider } from './context/CartMenuContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  <UserProvider>
-    <CartProvider>
-      <CartMenuProvider>
-        <StrictMode>
-          <App />
-        </StrictMode>
-      </CartMenuProvider>
-    </CartProvider>
-  </UserProvider>
+  <StrictMode>
+    <BrowserRouter>
+      <UserProvider>
+        <CartProvider>
+          <CartMenuProvider>
+            <App />
+          </CartMenuProvider>
+        </CartProvider>
+      </UserProvider>
+    </BrowserRouter>
+  </StrictMode>
 );

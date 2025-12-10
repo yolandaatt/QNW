@@ -4,10 +4,12 @@ import HomePage from '@/pages/Home/HomePage';
 import CartPage from '@/pages/Cart/CartPage';
 import ProductsPage from '@/pages/Products/ProductsPage';
 import ProductDetailsPage from '@/pages/Products/ProductDetails';
-import ProtectedRoute from '@/components/Protectedroute/ProtectedRoute';
+import AdminRoute from '@/components/AdminRoute/AdminRoute';
 import AdminPanel from '@/pages/Admin/AdminPanel';
 import LoginPage from '@/pages/Login/LoginPage';
 import RegisterPage from '@/pages/Login/RegisterPage';
+import MyPage from '@/pages/MyPage/MyPage';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 
 function AppRoutes() {
   return (
@@ -20,8 +22,16 @@ function AppRoutes() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <AdminPanel />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/my-pages"
+          element={
+            <ProtectedRoute>
+              <MyPage />
             </ProtectedRoute>
           }
         />
