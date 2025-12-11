@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactElement;
 }
 
-const ProtectedRoute = ({ children }: Props) => {
+const AdminRoute = ({ children }: Props) => {
   const token = localStorage.getItem('token');
 
   if (!token) {
@@ -26,4 +26,4 @@ const ProtectedRoute = ({ children }: Props) => {
   }
 };
 
-export default ProtectedRoute;
+export default AdminRoute;
