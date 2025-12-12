@@ -1,15 +1,15 @@
 import { Routes, Route } from 'react-router-dom';
-import MainLayout from '@/layouts/MainLayout';
-import HomePage from '@/pages/Home/HomePage';
-import CartPage from '@/pages/Cart/CartPage';
-import ProductsPage from '@/pages/Products/ProductsPage';
-import ProductDetailsPage from '@/pages/Products/ProductDetails';
-import AdminRoute from '@/components/AdminRoute/AdminRoute';
-import AdminPanel from '@/pages/Admin/AdminPanel';
-import LoginPage from '@/pages/Login/LoginPage';
-import RegisterPage from '@/pages/Login/RegisterPage';
-import MyPage from '@/pages/MyPage/MyPage';
-import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
+import MainLayout from '../layouts/MainLayout';
+import HomePage from '../pages/Home/HomePage';
+import CartPage from '../pages/Cart/CartPage';
+import ProductsPage from '../pages/Products/ProductsPage';
+import ProductDetailsPage from '../pages/Products/ProductDetails';
+import AdminRoute from '../components/AdminRoute/AdminRoute';
+import AdminPanel from '../pages/Admin/AdminPanel';
+import LoginPage from '../pages/Login/LoginPage';
+import RegisterPage from '../pages/Login/RegisterPage';
+import MyPage from '../pages/MyPage/MyPage';
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 
 function AppRoutes() {
   return (
