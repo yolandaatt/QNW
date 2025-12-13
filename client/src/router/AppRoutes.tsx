@@ -28,7 +28,7 @@ function AppRoutes() {
           }
         />
         <Route
-          path="/my-pages"
+          path="/mypage"
           element={
             <ProtectedRoute>
               <MyPage />
