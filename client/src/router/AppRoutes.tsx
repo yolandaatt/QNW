@@ -11,7 +11,7 @@ import RegisterPage from '../pages/Login/RegisterPage';
 import MyPage from '../pages/MyPage/MyPage';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import CheckoutPage from '../pages/Checkout/CheckoutPage';
-import OrderConfirmationPage from '@/pages/OrderConfirmation/OrderConfirmation';
+import OrderConfirmationPage from '../pages/OrderConfirmation/OrderConfirmation';
 
 function AppRoutes() {
   return (
