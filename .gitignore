@@ -61,3 +61,6 @@ client/.vite/
 server/dist/
 # Om du råkar ha kompilerade test-js från äldre buildar:
 server/tests/**/*.js
+
+server/uploads/*
+!server/uploads/.gitkeep

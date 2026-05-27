@@ -10,6 +10,8 @@ import LoginPage from '../pages/Login/LoginPage';
 import RegisterPage from '../pages/Login/RegisterPage';
 import MyPage from '../pages/MyPage/MyPage';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
+import CheckoutPage from '../pages/Checkout/CheckoutPage';
+import OrderConfirmationPage from '@/pages/Orderconfirmation/OrderConfirmation';
 
 function AppRoutes() {
   return (
@@ -37,6 +39,8 @@ function AppRoutes() {
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
       </Route>
     </Routes>
   );

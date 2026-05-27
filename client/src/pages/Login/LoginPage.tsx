@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '@/context/UserContext';
 import api from '@/api/axios';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -11,18 +11,13 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useUser();
+  const { t } = useTranslation();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
-      const res = await api.post('/auth/login', {
-        email,
-        password,
-      });
-
+      const res = await api.post('/auth/login', { email, password });
       login(res.data.name, res.data.token, res.data.role === 'admin');
-
       if (res.data.role === 'admin') {
         navigate('/admin');
       } else {
@@ -30,61 +25,69 @@ const LoginPage = () => {
       }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message || 'Något gick fel. Försök igen');
+        setError(err.response?.data?.message || t('error'));
       } else {
-        console.error('Okänt fel:', err);
-        setError('Ett okänt fel inträffade');
+        setError(t('unknownError'));
       }
     }
   };
 
   return (
-    <div className="mx-auto mt-10 max-w-md rounded border p-4 shadow">
-      <h1 className="mb-4 text-xl font-bold">Login</h1>
-      <form onSubmit={handleLogin} className="space-y-4">
-        <div>
-          <label htmlFor="email" className="mb-1 block">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            className="w-full rounded border px-2 py-1"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password" className="mb-1 block">
-            Lösenord
-          </label>
-          <input
-            id="password"
-            type="password"
-            className="w-full rounded border px-2 py-1"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+    <div className="flex min-h-[70vh] items-center justify-center px-6">
+      <div className="w-full max-w-sm">
+        <h1 className="mb-2 text-center text-sm uppercase tracking-widest">{t('loginTitle')}</h1>
+        <p className="mb-10 text-center text-xs uppercase tracking-widest text-gray-400">
+          {t('welcomeBack')}
+        </p>
 
-        <div className="flex gap-4">
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div>
+            <label htmlFor="email" className="mb-2 block text-xs uppercase tracking-widest">
+              {t('email')}
+            </label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full border-b border-gray-300 bg-transparent py-2 text-sm autofill:shadow-[inset_0_0_0px_1000px_white] autofill:[-webkit-text-fill-color:black] focus:border-black focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="mb-2 block text-xs uppercase tracking-widest">
+              {t('password')}
+            </label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full border-b border-gray-300 bg-transparent py-2 text-sm autofill:shadow-[inset_0_0_0px_1000px_white] autofill:[-webkit-text-fill-color:black] focus:border-black focus:outline-none"
+            />
+          </div>
+
+          {error && <p className="text-xs uppercase tracking-widest text-red-600">{error}</p>}
+
           <button
             type="submit"
-            className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="w-full bg-black py-3 text-xs uppercase tracking-widest text-white transition-all hover:bg-gray-800"
           >
-            Logga in
+            {t('loginButton')}
           </button>
-          <Link to="/register">
-            <button
-              type="submit"
-              className="rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
+
+          <div className="text-center">
+            <Link
+              to="/register"
+              className="text-xs uppercase tracking-widest underline transition-opacity hover:opacity-60"
             >
-              Skapa konto
-            </button>
-          </Link>
-        </div>
-      </form>
+              {t('createAccount')}
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

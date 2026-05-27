@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
@@ -63,6 +63,36 @@ export const login = async (req: Request, res: Response) => {
       role: user.role,
       name: user.name,
     });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Serverfel" });
+  }
+};
+
+export const getMe: RequestHandler = async (req, res) => {
+  try {
+    const user = await User.findById(req.user!.id).select("-password");
+    if (!user)
+      return res.status(404).json({ message: "Användaren hittades inte" });
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Serverfel" });
+  }
+};
+
+export const updateMe: RequestHandler = async (req, res) => {
+  try {
+    const { name, phone, address } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.user!.id,
+      { name, phone, address },
+      { new: true, runValidators: true },
+    ).select("-password");
+
+    if (!user)
+      return res.status(404).json({ message: "Användaren hittades inte" });
+    res.json(user);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Serverfel" });
