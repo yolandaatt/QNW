@@ -41,7 +41,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex min-h-[70vh] items-center justify-center px-6">
+    <div className="flex min-h-screen items-center justify-center px-6 py-12">
       <div className="w-full max-w-sm">
         <h1 className="mb-2 text-center text-sm uppercase tracking-widest">{t('registerTitle')}</h1>
         <p className="mb-10 text-center text-xs uppercase tracking-widest text-gray-400">
