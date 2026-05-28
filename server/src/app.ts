@@ -56,7 +56,7 @@ app.post("/api/upload", upload.single("image"), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "Ingen fil uppladdad" });
   }
-  const imageUrl = `http://localhost:3001/uploads/${req.file.filename}`;
+  const imageUrl = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
   res.json({ imageUrl });
 });
 
